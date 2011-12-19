@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+<title>Simon Game</title>
+</head>
+<body>
+<div id="viz"></div>
+<script type="text/javascript">
+
+d3.xml("game.svg", "image/svg+xml", function(xml) {
+    var importedNode = document.importNode(xml.documentElement, true);
+    d3.select("#viz").node().appendChild(importedNode);
+
+    var buttons = [ "centre"
+                  , "blue"
+                  , "yellow"
+                  , "green"
+                  , "red"
+                  ];
+
+    // Bind data and functions to buttons
+    d3.select("#simon").selectAll(".btn")
+      .data(buttons)
+      .on("mousedown", function(d, i) {
+          alert(d);
+      });
+
+});
+
+</script>
+</body>
+</html>
+
