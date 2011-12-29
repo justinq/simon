@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- The name of the app on the home screen -->
   <title>Simon Game</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 
@@ -20,40 +19,41 @@
   <script>
     // To be called when there's a move event on the body itself:
     function BlockMove(event) {
-      event.preventDefault() ; // Tell Safari not to move the window.
+      event.preventDefault(); // Tell Safari not to move the window.
     }
   </script>
-  <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+  <!-- TODO: add this module to the repo -->
+  <script type="text/javascript" src="../lib/d3/d3.js"></script>
 </head>
 <body>
-    <div id="container" ontouchmove="BlockMove(event);">
-        <!--
-            The audio sources for the buttons
-        -->
-        <audio id="blue-tone" preload autobuffer>
-            <source src="audio/blue.oga" type="audio/ogg">
-            <source src="audio/blue.wav" type="audio/wav">
-<!--            <source src="audio/blue.m4a" type="audio/mp4"> -->
-        </audio>
-        <audio id="yellow-tone" preload autobuffer>
-            <source src="audio/yellow.oga" type="audio/ogg">
-            <source src="audio/yellow.wav" type="audio/wav">
-<!--            <source src="audio/yellow.m4a" type="audio/mp4"> -->
-        </audio>
-        <audio id="green-tone" preload autobuffer>
-            <source src="audio/green.oga" type="audio/ogg">
-            <source src="audio/green.wav" type="audio/wav">
-<!--            <source src="audio/green.m4a" type="audio/mp4"> -->
-        </audio>
-        <audio id="red-tone" preload autobuffer>
-            <source src="audio/red.oga" type="audio/ogg">
-            <source src="audio/red.wav" type="audio/wav">
-<!--            <source src="audio/red.m4a" type="audio/mp4"> -->
-        </audio>
+  <div id="container" ontouchmove="BlockMove(event);">
+    <!--
+      The audio sources for the buttons
+    -->
+    <audio id="blue-tone" preload autobuffer>
+      <source src="audio/blue.oga" type="audio/ogg">
+      <source src="audio/blue.wav" type="audio/wav">
+<!--  <source src="audio/blue.m4a" type="audio/mp4"> -->
+    </audio>
+    <audio id="yellow-tone" preload autobuffer>
+      <source src="audio/yellow.oga" type="audio/ogg">
+      <source src="audio/yellow.wav" type="audio/wav">
+<!--  <source src="audio/yellow.m4a" type="audio/mp4"> -->
+    </audio>
+      <audio id="green-tone" preload autobuffer>
+      <source src="audio/green.oga" type="audio/ogg">
+      <source src="audio/green.wav" type="audio/wav">
+<!--  <source src="audio/green.m4a" type="audio/mp4"> -->
+    </audio>
+      <audio id="red-tone" preload autobuffer>
+      <source src="audio/red.oga" type="audio/ogg">
+      <source src="audio/red.wav" type="audio/wav">
+<!--  <source src="audio/red.m4a" type="audio/mp4"> -->
+    </audio>
 
-        <div id="game-viz"></div>
-        <script type="text/javascript" src="game.js"></script>
-    </div>
+    <div id="game_viz"></div>
+    <script type="text/javascript" src="game.js"></script>
+  </div>
 </body>
 </html>
 

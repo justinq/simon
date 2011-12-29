@@ -25,7 +25,7 @@ var btnUp = function(element, d, i) {
 
 d3.xml("images/game.svg", "image/svg+xml", function(xml) {
     var importedNode = document.importNode(xml.documentElement, true);
-    d3.select("#game-viz").node().appendChild(importedNode);
+    d3.select("#game_viz").node().appendChild(importedNode);
 
     var buttons = [ "centre"
                   , "blue"

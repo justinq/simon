@@ -1,0 +1,6 @@
+[submodule "lib/springy"]
+	path = lib/springy
+	url = https://github.com/dhotson/springy.git
+[submodule "lib/d3"]
+	path = lib/d3
+	url = https://github.com/mbostock/d3.git

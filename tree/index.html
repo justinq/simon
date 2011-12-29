@@ -1,4 +1,5 @@
-<html manifest="native.manifest">
+<html>
+<!-- <html manifest="native.manifest"> -->
 
 <!--
  Note: The web server must serve the manifest file as MIME type
@@ -15,12 +16,12 @@
  -->
 
 <head>
-
- <!-- The name of the app on the home screen -->
- <title>Simon Tree</title>
+  <title>Simon Tree</title>
+  <link rel=stylesheet" type="text/css" href="style.css" />
 
   <!-- Prevent scaling -->
-  <meta name="viewport" content="user-scalable=no, width=device-width" />
+  <meta name="viewport" content="width=device-width;
+      initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
   <!-- Eliminate url and button bars if added to home screen -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <!-- Choose how to handle the phone status bar -->
@@ -30,26 +31,28 @@
   <!-- Choose a 57x57 image for the icon -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
-  <style>
-    body {
-      margin: 0px ;
-      padding: 0px ;
-      color: #212121 ;
-      font-family: Helvetica ;
-      font-size: 14px ;
-    }
-  </style>
   <script>
     // To be called when there's a move event on the body itself:
     function BlockMove(event) {
       event.preventDefault(); // Tell Safari not to move the window.
     }
   </script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="../lib/springy/springy.js"></script>
+  <script src="../lib/springy/springyui.js"></script>
+
+  <script src="../lib/d3/d3.js"></script>
+  <script src="../lib/d3/d3.csv.js"></script>
+
+  <script type="text/javascript" src="tree.js"></script>
 </head>
 
-<body ontouchmove="BlockMove(event);">
-
-  <div id="container">
+<body>
+  <div id="container" ontouchmove="BlockMove(event);">
+    <canvas id="tree_viz" width="640" height="480">
+      <p>Your browser doesn't support canvas.</p>
+    </canvas>
   </div>
 
 </body>
