@@ -36,8 +36,19 @@
     function BlockMove(event) {
       event.preventDefault(); // Tell Safari not to move the window.
     }
+    /*
+     * Check for touch-enabled browser
+     */
+    var check_touch_device = function() {  
+        try {
+            document.createEvent("TouchEvent");
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+    var is_touch_device = check_touch_device();
   </script>
-
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="../lib/springy/springy.js"></script>
   <script src="../lib/springy/springyui.js"></script>

@@ -1,15 +1,3 @@
-/*
- * Check for touch-enabled browser (this should go in its own file)
- */
-var check_touch_device = function() {  
-    try {  
-        document.createEvent("TouchEvent");  
-        return true;  
-    } catch (e) {  
-        return false;  
-    }  
-}
-var is_touch_device = check_touch_device();
 
 var opacityOff = 0.5
   , opacityOn  = 1.0
