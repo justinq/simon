@@ -15,12 +15,7 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
     var importedNode = document.importNode(xml.documentElement, true);
     d3.select("#game_viz").node().appendChild(importedNode);
 
-    var buttons = [ "centre"
-                  , "blue"
-                  , "yellow"
-                  , "green"
-                  , "red"
-                  ];
+    var buttons = [ "centre" , "blue" , "yellow" , "green" , "red" ];
 
     // Bind data and functions to buttons
     d3.select("#simon").selectAll(".btn")
@@ -32,6 +27,8 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
       .on(is_touch_device ? "touchend" : "mouseup", function(d, i) {
           btnUp(this, d, i);
       });
-
 });
 
+d3.text("/cgi-bin/server.py?get", function (datasetText) {
+    //var info = d3.csv.parse(datasetText);
+});
