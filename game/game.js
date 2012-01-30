@@ -52,19 +52,28 @@ var getSequence = function() {
 /*
  * Play the sequence
  */
+var highlightButton = function(i, on) {
+    d3.select("#btn_"+Buttons[i])
+        .style("fill-opacity", on ? opacityOn : opacityOff);
+}
+
 var playNote = function(i) {
     document.getElementById(Buttons[i]+"-tone").play();
 }
 
 var playSequence = function(s) {
-    for (var i=0; i<s.length; i++) {
-        console.log(s[i]);
-        // TODO: show the note being played
-        //d3.select(element).style("fill-opacity", opacityOn);
-        playNote(s[i]);
-        //d3.select(element).style("fill-opacity", opacityOff);
+    if (s.length > 0) {
+        // play first first note
+        var note = s[0];
+        highlightButton(note, true);
+        playNote(note);
+        setTimeout('highlightButton('+note+', false)', 500);
+        // play the remaining notes
+        setTimeout('playSequence("'+s.substring(1)+'")', 750);
     }
-    setState(State.input);
+    else {
+        setState(State.input);
+    }
 }
 
 /*
@@ -101,13 +110,13 @@ var mainBtnUp = function(element) {
 
 var btnDown = function(element, d, i) {
     if (currentState == State.input) {
-        d3.select(element).style("fill-opacity", opacityOn);
+        highlightButton(i, true);
         playNote(i);
     }
 };
 
 var btnUp = function(element, d, i) {
-    d3.select(element).style("fill-opacity", opacityOff);
+    highlightButton(i, false);
 };
 
 d3.xml("images/game.svg", "image/svg+xml", function(xml) {
