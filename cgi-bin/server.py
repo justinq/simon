@@ -71,7 +71,7 @@ if command[0]=="get":
    file.readline()
    file.readline()
    print file.readline().rstrip()
-   print file.readline()
+   print file.readline().rstrip()
 
 if command[0]=="put":
    distance=levnorm(command[2],command[3])
@@ -106,4 +106,4 @@ if command[0]=="tree":
 
 if command[0]=="reset":
     newtree(command[1])
-   
+

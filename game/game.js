@@ -1,12 +1,111 @@
+/*
+ * The Simon Game
+ */
 
 var opacityOff = 0.5
   , opacityOn  = 1.0
   ;
 
+var State = { "ready" : 0
+            , "get"   : 1
+            , "play"  : 2
+            , "input" : 3
+            , "put"   : 4
+            , "score" : 5
+            };
+var StateText = [ "Ready?<br/>Click to begin"
+                , "Picking<br/>from tree..."
+                , "Watch & Listen"
+                , "Play back<br/>then click<br/>here"
+                , "Adding<br/>to tree..."
+                , "%s<br/>Click for next"
+                ];
+var Buttons = [ "centre" , "blue" , "yellow" , "green" , "red" ];
+
+var currentState = State.ready;
+var currentSequence;
+
+var setState = function(state) {
+    currentState = state;
+    d3.select("#btn_centre_text").html( StateText[state] );
+}
+
+/*
+ * Get the next sequence from the tree
+ */
+var getSequence = function() {
+    d3.text("/cgi-bin/server.py?get", function (datasetText) {
+        //var info = d3.csv.parse(datasetText);
+        var data = datasetText.split('\n');
+        if (data.length >= 3) {
+            currentSequence = { "parent"   : data[0]
+                              , "sequence" : data[1]
+                              , "accuracy" : data[2]
+                              , "input"    : ""
+                              };
+            setState(State.play);
+            playSequence(currentSequence.sequence);
+        }
+    });
+}
+
+/*
+ * Play the sequence
+ */
+var playNote = function(i) {
+    document.getElementById(Buttons[i]+"-tone").play();
+}
+
+var playSequence = function(s) {
+    for (var i=0; i<s.length; i++) {
+        console.log(s[i]);
+        // TODO: show the note being played
+        //d3.select(element).style("fill-opacity", opacityOn);
+        playNote(s[i]);
+        //d3.select(element).style("fill-opacity", opacityOff);
+    }
+    setState(State.input);
+}
+
+/*
+ * Add the sequence to the tree
+ */
+var putSequence = function(s) {
+    setState(State.score);
+}
+
+var mainBtnDown = function(element) {
+}
+
+var mainBtnUp = function(element) {
+    switch (currentState) {
+        case State.ready:
+        case State.score:
+            // Pick a new sequence
+            setState(State.get);
+            getSequence();
+            break;
+        case State.get:
+        case State.play:
+        case State.put:
+            break;
+        case State.input:
+            // Add the inputted sequence
+            setState(State.put);
+            putSequence();
+            break;
+        default:
+            break;
+    }
+}
+
 var btnDown = function(element, d, i) {
-    document.getElementById(d+"-tone").play();
-    d3.select(element).style("fill-opacity", opacityOn);
+    if (currentState == State.input) {
+        d3.select(element).style("fill-opacity", opacityOn);
+        playNote(i);
+    }
 };
+
 var btnUp = function(element, d, i) {
     d3.select(element).style("fill-opacity", opacityOff);
 };
@@ -15,20 +114,33 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
     var importedNode = document.importNode(xml.documentElement, true);
     d3.select("#game_viz").node().appendChild(importedNode);
 
-    var buttons = [ "centre" , "blue" , "yellow" , "green" , "red" ];
-
     // Bind data and functions to buttons
     d3.select("#simon").selectAll(".btn")
-      .data(buttons)
+      .data(Buttons)
       .style("fill-opacity", opacityOff)
       .on(is_touch_device ? "touchstart" : "mousedown", function(d, i) {
-          btnDown(this, d, i);
+          i==0 ? mainBtnDown(this) : btnDown(this, d, i);
       })
       .on(is_touch_device ? "touchend" : "mouseup", function(d, i) {
-          btnUp(this, d, i);
+          i==0 ? mainBtnUp(this) : btnUp(this, d, i);
       });
+
+    d3.select("#btn_centre_label")
+      .on(is_touch_device ? "touchstart" : "mousedown", function() {
+          mainBtnDown(this);
+      })
+      .on(is_touch_device ? "touchend" : "mouseup", function() {
+          mainBtnUp(this);
+      });
+
+    // add centre button text
+    var centreBtn = d3.select("#btn_centre");
+
+    vizSVG = d3.select("#viz")
+               .append("svg:svg").attr("id", "vizSVG");
+
+    // set the ready state
+    setState(State.ready);
+
 });
 
-d3.text("/cgi-bin/server.py?get", function (datasetText) {
-    //var info = d3.csv.parse(datasetText);
-});
