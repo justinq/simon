@@ -6,6 +6,7 @@ var opacityOff = 0.5
   , opacityOn  = 1.0
   ;
 
+var server = "/cgi-bin/server.py?"
 var State = { "ready" : 0
             , "get"   : 1
             , "play"  : 2
@@ -34,7 +35,7 @@ var setState = function(state) {
  * Get the next sequence from the tree
  */
 var getSequence = function() {
-    d3.text("/cgi-bin/server.py?get", function (datasetText) {
+    d3.text(server+"get", function (datasetText) {
         //var info = d3.csv.parse(datasetText);
         var data = datasetText.split('\n');
         if (data.length >= 3) {
@@ -80,7 +81,25 @@ var playSequence = function(s) {
  * Add the sequence to the tree
  */
 var putSequence = function(s) {
-    setState(State.score);
+    console.log(currentSequence);
+
+    d3.text(server+"put,"+currentSequence.parent+","
+            +currentSequence.sequence+","+currentSequence.input,
+        function (datasetText) {
+            //var info = d3.csv.parse(datasetText);
+            console.log(datasetText);
+            /*
+            var data = datasetText.split('\n');
+            if (data.length >= 3) {
+                currentSequence = { "parent"   : data[0]
+                                , "sequence" : data[1]
+                                , "accuracy" : data[2]
+                                , "input"    : ""
+                                };
+            }
+            */
+            setState(State.score);
+        });
 }
 
 var mainBtnDown = function(element) {
@@ -111,6 +130,7 @@ var mainBtnUp = function(element) {
 var btnDown = function(element, d, i) {
     if (currentState == State.input) {
         highlightButton(i, true);
+        currentSequence.input += i;
         playNote(i);
     }
 };
