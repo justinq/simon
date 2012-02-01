@@ -162,14 +162,7 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
           mainBtnUp(this);
       });
 
-    // add centre button text
-    var centreBtn = d3.select("#btn_centre");
-
-    vizSVG = d3.select("#viz")
-               .append("svg:svg").attr("id", "vizSVG");
-
     // set the ready state
     setState(State.ready);
-
 });
 
