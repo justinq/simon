@@ -87,16 +87,24 @@ var playSequence = function(s) {
  * Add the sequence to the tree
  */
 var putSequence = function(s) {
-    d3.text(server+"put,"+currentSequence.parent+","
-            +currentSequence.sequence+","+currentSequence.input,
-        function (datasetText) {
-            var data = datasetText.split('\n');
-            if (data.length >= 1) {
-                // Error is returned, score = 1 - error
-                currentSequence.score = (1.0 - parseFloat(data[0])) * 100;
-            }
-            setState(State.score);
-        });
+    // if nothing has been entered, just report 0 score
+    if (currentSequence.input.length<1) {
+        currentSequence.score = 0;
+        setState(State.score);
+    }
+    // Add sequence to tree and report score
+    else {
+        d3.text(server+"put,"+currentSequence.parent+","
+                +currentSequence.sequence+","+currentSequence.input,
+            function (datasetText) {
+                var data = datasetText.split('\n');
+                if (data.length >= 1) {
+                    // Error is returned, score = 1 - error
+                    currentSequence.score = (1.0 - parseFloat(data[0])) * 100;
+                }
+                setState(State.score);
+            });
+    }
 }
 
 var mainBtnDown = function(element) {
