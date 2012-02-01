@@ -6,7 +6,7 @@ import random
 import cgi
 
 MAXSIZE=250
-DIRPREFIX=os.getcwd()+"/data/"
+DIRPREFIX="data/"
 DATADIR=DIRPREFIX+open(DIRPREFIX+"current_tree").readline().rstrip()
 
 def levenshtein(s1, s2):

@@ -1,2 +1,4 @@
 *.bak
+data/demo/*
+!data/demo/0
 !.gitignore
