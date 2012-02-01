@@ -19,7 +19,7 @@ var StateText = [ "Ready?<br/>Click to begin"
                 , "Watch & Listen"
                 , "Play back<br/>then click<br/>here"
                 , "Adding<br/>to tree..."
-                , "%s<br/>Click for next"
+                , "SCORE<br/>Click for next"
                 ];
 var Buttons = [ "centre" , "blue" , "yellow" , "green" , "red" ];
 
@@ -28,7 +28,12 @@ var currentSequence;
 
 var setState = function(state) {
     currentState = state;
-    d3.select("#btn_centre_text").html( StateText[state] );
+    var msg = StateText[state];
+    // if it's the scoring state, add the score
+    if (state == State.score) {
+        msg = msg.replace("SCORE", currentSequence.score==100 ? "Perfect!" : currentSequence.score+"%");
+    }
+    d3.select("#btn_centre_text").html( msg );
 }
 
 /*
@@ -43,6 +48,7 @@ var getSequence = function() {
                               , "sequence" : data[1]
                               , "accuracy" : data[2]
                               , "input"    : ""
+                              , "score"    : 0
                               };
             setState(State.play);
             playSequence(currentSequence.sequence);
@@ -81,23 +87,14 @@ var playSequence = function(s) {
  * Add the sequence to the tree
  */
 var putSequence = function(s) {
-    console.log(currentSequence);
-
     d3.text(server+"put,"+currentSequence.parent+","
             +currentSequence.sequence+","+currentSequence.input,
         function (datasetText) {
-            //var info = d3.csv.parse(datasetText);
-            console.log(datasetText);
-            /*
             var data = datasetText.split('\n');
-            if (data.length >= 3) {
-                currentSequence = { "parent"   : data[0]
-                                , "sequence" : data[1]
-                                , "accuracy" : data[2]
-                                , "input"    : ""
-                                };
+            if (data.length >= 1) {
+                // Error is returned, score = 1 - error
+                currentSequence.score = (1.0 - parseFloat(data[0])) * 100;
             }
-            */
             setState(State.score);
         });
 }
@@ -162,7 +159,7 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
           mainBtnUp(this);
       });
 
-    // set the ready state
+    // set to ready state
     setState(State.ready);
 });
 
