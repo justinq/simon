@@ -14,12 +14,12 @@ var State = { "ready" : 0
             , "put"   : 4
             , "score" : 5
             };
-var StateText = [ "Ready?<br/>Click to begin"
-                , "Picking<br/>from tree..."
-                , "Watch & Listen"
-                , "Play back<br/>then click<br/>here"
-                , "Adding<br/>to tree..."
-                , "SCORE<br/>Click for next"
+var StateText = [ "<p>Ready?</p><p>Click to begin</p>"
+                , "<p>Picking<br/>from tree...</p>"
+                , "<p>Watch<br/>&<br/>Listen</p>"
+                , "<p>Play back<br/>then click<br/>here</p>"
+                , "<p>Adding<br/>to tree...</p>"
+                , "<p><span style='font-size:xx-large'>SCORE</span><br/>Click for next</p>"
                 ];
 var Buttons = [ "centre" , "blue" , "yellow" , "green" , "red" ];
 

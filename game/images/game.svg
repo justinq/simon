@@ -61,10 +61,10 @@
        class="btn"
        />
   </g>
-  <foreignObject id="btn_centre_label" x="310" y="310" width="145" height="145">
+  <foreignObject id="btn_centre_label" x="310" y="322" width="145" height="145">
     <body xmlns="http://www.w3.org/1999/xhtml">
       <div id="btn_centre_text" class="btn"
-        style="font-size:20px; color:white; text-align:center;" >
+        style="font-size:20px; color:white; text-align:center" >
           <p>.</p>
           <p>Simon</p>
           <p>.</p>
