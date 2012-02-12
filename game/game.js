@@ -14,7 +14,7 @@ var State = { "ready" : 0
             , "put"   : 4
             , "score" : 5
             };
-var StateText = [ "<p>Ready?</p><p>Click to begin</p>"
+var StateText = [ "<p><span style='font-size:x-large'>Ready?</span></p><p>Click to begin</p>"
                 , "<p>Picking<br/>from tree...</p>"
                 , "<p>Watch<br/>&<br/>Listen</p>"
                 , "<p>Play back<br/>then click<br/>here</p>"
@@ -28,6 +28,9 @@ var currentSequence;
 var progressArc, progressBar;
 var loaded = true;
 
+/*
+ * Set the current State
+ */
 var setState = function(state) {
     currentState = state;
     var msg = StateText[state];
@@ -36,6 +39,9 @@ var setState = function(state) {
         msg = msg.replace("SCORE", currentSequence.score==100 ? "Perfect!" : currentSequence.score+"%");
     }
     d3.select("#btn_centre_text").html( msg );
+}
+var resetState = function() {
+    setState(State.ready);
 }
 
 /*
@@ -213,7 +219,7 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
 var progressTimer = function(stopFunction, params) {
     var loadProgress = 0.0;
     d3.timer(function() {
-        loadProgress += 0.005;
+        loadProgress += 0.01;
         progressBar.data([loadProgress]).attr("d", progressArc);
         if (loadProgress>1.0) {
             loadProgress = 0.0;

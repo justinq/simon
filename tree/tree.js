@@ -1,14 +1,15 @@
 /*
  * Load the tree data from the server
  */
+var server = "/cgi-bin/server.py?"
 var graph = new Graph();
 
-d3.text('tree.csv', function(data) {
-    var treeInfo = d3.csv.parse(data);
+d3.text(server+"tree", function (datasetText) {
+    var treeInfo = d3.csv.parse(datasetText);
     treeInfo.forEach( function(i) {
         //console.log(i);
         var n = graph.newNode({label:i.name, sequence:i.sequence});
-        console.log(n.id);
+        //console.log(n.id);
         if (i.parent != "null") {
             // TODO: get the parent node
             //graph.newEdge(n, n_parent, {color: '#00A0B0'});
