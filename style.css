@@ -18,6 +18,13 @@ body {
     height:100%;
 }
 
+#game_viz {
+    position: absolute;
+    top:118px;
+    width:100%;
+    height:100%;
+}
+
 #tree_viz {
     /* position: absolute; */
     width:100%;
