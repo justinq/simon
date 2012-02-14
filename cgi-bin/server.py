@@ -92,6 +92,7 @@ if command[0]=="put":
 
 if command[0]=="tree":
    print DATADIR;
+   print "parent,id,sequence,error,ip"
    datasets=[f for f in os.listdir(DATADIR)]
    datasets.sort()
    for f in datasets:

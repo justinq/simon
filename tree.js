@@ -1,18 +1,31 @@
 /*
  * Load the tree data from the server
  */
-var server = "/cgi-bin/server.py?"
-var graph = new Graph();
+var server  = "/cgi-bin/server.py?"
+  , graph   = new Graph()
+  , nodes   = {}
+  ;
 
 d3.text(server+"tree", function (datasetText) {
+    // the first line is the tree name
+    var treename,
+        datasetText = datasetText.replace(/(.*)\n/, function(a) {
+        treename = a;
+        return "";
+    });
+    console.log(datasetText);
     var treeInfo = d3.csv.parse(datasetText);
     treeInfo.forEach( function(i) {
-        //console.log(i);
-        var n = graph.newNode({label:i.name, sequence:i.sequence});
-        //console.log(n.id);
+        // create the node
+        nodes[i.id] = graph.newNode({ label:i.id
+                                  , parent:i.parent
+                                  , sequence:i.sequence
+                                  , error:i.error
+                                  , ip:i.ip
+                                  });
+        // Add the edge from the parent node
         if (i.parent != "null") {
-            // TODO: get the parent node
-            //graph.newEdge(n, n_parent, {color: '#00A0B0'});
+            graph.newEdge(nodes[i.parent], nodes[i.id], {color: '#000000'});
         }
     });
 });
