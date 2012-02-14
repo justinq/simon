@@ -16,25 +16,7 @@
   <!-- Choose a 57x57 image for the icon -->
   <link rel="apple-touch-icon" href="images/icon.png" />
 
-  <script>
-    // To be called when there's a move event on the body itself:
-    function BlockMove(event) {
-      event.preventDefault(); // Tell Safari not to move the window.
-    }
-    /*
-     * Check for touch-enabled browser
-     */
-    var check_touch_device = function() {
-        try {
-            document.createEvent("TouchEvent");
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-    var is_touch_device = check_touch_device();
-  </script>
-  <!-- TODO: add this module to the repo -->
+  <script type="text/javascript" src="/lib/touch/touch.js"></script>
   <script type="text/javascript" src="/lib/d3/d3.js"></script>
 </head>
 <body>
