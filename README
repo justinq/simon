@@ -8,6 +8,12 @@ python -m CGIHTTPServer 8000
 # Then visit:
 http://localhost:8000
 
+/*
+ * TODO
+ */
+
+General
+    Add resize to container for both tree and game in index.html
 
 Tree
     nodes as circles
