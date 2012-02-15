@@ -1,40 +1,53 @@
 /*
  * Load the tree data from the server
  */
-var server  = "/cgi-bin/server.py?"
-  , graph   = new Graph()
-  , nodes   = {}
+var server   = "/cgi-bin/server.py?"
+  , treename = ''
+  , graph    = new Graph()
+  , nodes    = {}
+  , refreshInterval
   ;
 
-d3.text(server+"tree", function (datasetText) {
-    // the first line is the tree name
-    var treename,
-        datasetText = datasetText.replace(/(.*)\n/, function(a) {
-        treename = a;
-        return "";
+var addNode = function(n) {
+    nodes[n.id] = graph.newNode({ label:n.id
+                                , parent:n.parent
+                                , sequence:n.sequence
+                                , error:n.error
+                                , ip:n.ip
+                                });
+    // Add the edge from the parent node
+    if (n.parent != "null") {
+        graph.newEdge(nodes[n.parent], nodes[n.id], {color: '#000000'});
+    }
+}
+
+var refreshTree = function() {
+    console.log("refreshTree");
+    d3.text(server+"tree", function (datasetText) {
+        // the first line is the tree name
+        var datasetText = datasetText.replace(/(.*)\n/, function(a) {
+            treename = a;
+            return "";
+        });
+        var treeInfo = d3.csv.parse(datasetText);
+        // Add the nodes if the don't exist already
+        treeInfo.forEach( function(n) {
+            if (!nodes[n.id]) {
+                addNode(n);
+            }
+        });
     });
-    console.log(datasetText);
-    var treeInfo = d3.csv.parse(datasetText);
-    treeInfo.forEach( function(i) {
-        // create the node
-        nodes[i.id] = graph.newNode({ label:i.id
-                                  , parent:i.parent
-                                  , sequence:i.sequence
-                                  , error:i.error
-                                  , ip:i.ip
-                                  });
-        // Add the edge from the parent node
-        if (i.parent != "null") {
-            graph.newEdge(nodes[i.parent], nodes[i.id], {color: '#000000'});
-        }
-    });
-});
+};
 
 jQuery(function(){
     var springy = jQuery('#tree_viz').springy({
         graph: graph
     });
 });
+// start refreshing the tree
+refreshTree();
+refreshInterval = setInterval("refreshTree()", 5000);
+
 
 /*
 // Assign handlers immediately after making the request,
