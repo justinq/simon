@@ -23,6 +23,39 @@ Copyright (c) 2010 Dennis Hotson
  OTHER DEALINGS IN THE SOFTWARE.
 */
 
+// Renderer handles the layout rendering loop
+function Renderer(interval, layout, clear, drawEdge, drawNode, drawOverlay) {
+	this.interval = interval;
+	this.layout = layout;
+	this.clear = clear;
+	this.drawEdge = drawEdge;
+	this.drawNode = drawNode;
+	this.drawOverlay = drawOverlay;
+
+	this.layout.graph.addGraphListener(this);
+}
+
+Renderer.prototype.graphChanged = function(e) {
+	this.start();
+};
+
+Renderer.prototype.start = function() {
+	var t = this;
+	this.layout.start(50, function render() {
+		t.clear();
+
+		t.layout.eachEdge(function(edge, spring) {
+			t.drawEdge(edge, spring.point1.p, spring.point2.p);
+		});
+
+		t.layout.eachNode(function(node, point) {
+			t.drawNode(node, point.p);
+		});
+
+        t.drawOverlay();
+	});
+};
+
 (function() {
 
 jQuery.fn.springy = function(params) {
@@ -111,6 +144,9 @@ jQuery.fn.springy = function(params) {
 		// dragged don't repulse very well. Store the initial mass in mousedown
 		// and then restore it here.
 		dragged = null;
+        selected = null; // remove this to keep selected
+
+		renderer.start();
 	});
 
 	var renderer = new Renderer(1, layout,
@@ -203,24 +239,51 @@ jQuery.fn.springy = function(params) {
 
 			ctx.save();
 
-			// fill background
+            var r = node.data.radius;
+
+			// fill background based on nearest/selected node
+            ctx.fillStyle = node.data.fill;
 			if (selected !== null && nearest.node !== null && selected.node.id === node.id) {
-				ctx.fillStyle = "#FF0000";
+                // embiggen the selected node
+                r *= 2;
 			} else if (nearest !== null && nearest.node !== null && nearest.node.id === node.id) {
-				ctx.fillStyle = "#00FF00";
+                //ctx.fillStyle = "#FFFF00";
 			} else {
-				ctx.fillStyle = node.data.fill;
+                // node fill colour
+                //ctx.fillStyle = node.data.fill;
 			}
 
             ctx.beginPath();
-            ctx.arc(s.x, s.y, node.data.radius, 0, PIx2, false);
+            ctx.arc(s.x, s.y, r, 0, PIx2, false);
             ctx.fill();
             ctx.lineWidth = node.data.lineWidth;
             ctx.strokeStyle = node.data.stroke;
             ctx.stroke();
 
 			ctx.restore();
-		}
+		},
+
+        function drawOverlay() {
+			if (selected !== null && nearest.node !== null) {
+                // draw the sequence for the selected node
+                var r   = 20,
+                    pad = 10,
+                    pos = { "x":r+pad, "y":r+pad };
+                ctx.save();
+                for (i=0; i<selected.node.data.sequence.length; i++) {
+                    var c_idx = selected.node.data.sequence[i];
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, r, 0, PIx2, false);
+                    ctx.fillStyle = btn_colours[c_idx];
+                    ctx.fill();
+                    ctx.lineWidth = 0.5;
+                    ctx.strokeStyle = "#333333";
+                    ctx.stroke();
+                    pos.x += r*2 + pad;
+                }
+                ctx.restore();
+            }
+        }
 	);
 
 	renderer.start();

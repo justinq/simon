@@ -21,8 +21,6 @@ var StateText = [ "<p><span style='font-size:x-large'>Ready?</span></p><p>Click 
                 , "<p>Adding<br/>to tree...</p>"
                 , "<p><span style='font-size:xx-large'>SCORE</span><br/>Click for next</p>"
                 ];
-var Buttons = [ "centre" , "blue" , "yellow" , "green" , "red" ];
-
 var currentState = State.ready;
 var currentSequence;
 var progressArc, progressBar;
@@ -76,12 +74,12 @@ var getSequence = function() {
  * Play the sequence
  */
 var highlightButton = function(i, on) {
-    d3.select("#btn_"+Buttons[i])
+    d3.select("#btn_"+buttons[i])
         .style("fill-opacity", on ? opacityOn : opacityOff);
 }
 
 var playNote = function(i) {
-    document.getElementById(Buttons[i]+"-tone").play();
+    document.getElementById(buttons[i]+"-tone").play();
 }
 
 var playSequence = function(s) {
@@ -175,7 +173,7 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
 
     // Bind data and functions to buttons
     d3.select("#simon").selectAll(".btn")
-      .data(Buttons)
+      .data(buttons)
       .style("fill-opacity", opacityOff)
       .on(is_touch_device ? "touchstart" : "mousedown", function(d, i) {
           i==0 ? mainBtnDown(this) : btnDown(this, d, i);
