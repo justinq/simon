@@ -9,20 +9,27 @@ var server   = "/cgi-bin/server.py?"
   ;
 
 var addNode = function(n) {
-    nodes[n.id] = graph.newNode({ label:n.id
-                                , parent:n.parent
-                                , sequence:n.sequence
-                                , error:n.error
-                                , ip:n.ip
+    nodes[n.id] = graph.newNode({ label:        n.id
+                                , parent:       n.parent
+                                , sequence:     n.sequence
+                                , error:        n.error
+                                , ip:           n.ip
+                                , radius:       30
+                                , lineWidth:    3
+                                , stroke:       "#000000"
+                                , fill:         "#8ED6FF"
                                 });
     // Add the edge from the parent node
     if (n.parent != "null") {
-        graph.newEdge(nodes[n.parent], nodes[n.id], {color: '#000000'});
+        graph.newEdge(nodes[n.parent], nodes[n.id],
+                { colour:       '#000000'
+                , directional:  false
+                , weight:       2.0
+                });
     }
 }
 
 var refreshTree = function() {
-    console.log("refreshTree");
     d3.text(server+"tree", function (datasetText) {
         // the first line is the tree name
         var datasetText = datasetText.replace(/(.*)\n/, function(a) {
@@ -46,22 +53,5 @@ jQuery(function(){
 });
 // start refreshing the tree
 refreshTree();
-refreshInterval = setInterval("refreshTree()", 5000);
-
-
-/*
-// Assign handlers immediately after making the request,
-// and remember the jqxhr object for this request
-var jqxhr = $.get('tree.csv')
-    .success( function(data) {
-        console.log(data);
-        alert("success");
-    })
-    .error( function(e) {
-        console.log(e);
-        alert(e.statusText);
-    })
-    .complete( function(data) {
-        console.log("complete");
-    });
-*/
+// TODO: put this back to refresh the tree
+//refreshInterval = setInterval("refreshTree()", 5000);
