@@ -9,20 +9,23 @@ var server   = "/cgi-bin/server.py?"
   ;
 
 var addNode = function(n) {
-    nodes[n.id] = graph.newNode({ label:        n.id
-                                , parent:       n.parent
-                                , sequence:     n.sequence
-                                , error:        n.error
-                                , ip:           n.ip
-                                , radius:       30
-                                , lineWidth:    3
-                                , stroke:       "#000000"
-                                , fill:         "#8ED6FF"
+    // the colour index for the palette
+    var c_idx = Math.floor(n.error*(NUM_COLOURS-1));
+    nodes[n.id] = graph.newNode({ label:     n.id
+                                , parent:    n.parent
+                                , sequence:  n.sequence
+                                , error:     n.error
+                                , ip:        n.ip
+                                , radius:    n.id==0 ? 25 : 30
+                                , lineWidth: n.id==0 ? 15 : 0.1
+                                , stroke:    edge_colour
+                                , fill:      n.id==0 ?
+                                     'black' : palettehex[c_idx]
                                 });
     // Add the edge from the parent node
     if (n.parent != "null") {
         graph.newEdge(nodes[n.parent], nodes[n.id],
-                { colour:       '#000000'
+                { colour:       edge_colour
                 , directional:  false
                 , weight:       2.0
                 });

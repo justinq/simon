@@ -1,23 +1,8 @@
+<!DOCTYPE html>
 <html>
-<!-- <html manifest="native.manifest"> -->
-
-<!--
- Note: The web server must serve the manifest file as MIME type
- text/cache-manifest, or else Safari will ignore it.
-
- Add the following line to your apache conf or .htaccess file:
-
-  AddType text/cache-manifest .manifest
-
- Double check that it's being served with the right MIME type.
-
- You can use "wget -S" to look at the server headers coming back
- with a file.
- -->
-
 <head>
   <title>Simon Tree</title>
-  <link rel=stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
 
   <!-- Prevent scaling -->
   <meta name="viewport" content="width=device-width;
@@ -33,22 +18,22 @@
 
   <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   <script src="/lib/springy/springy.js"></script>
-  <script src="treeui.js"></script>
 
   <script src="/lib/d3/d3.js"></script>
   <script src="/lib/d3/d3.csv.js"></script>
 
   <script type="text/javascript" src="/lib/touch/touch.js"></script>
+  <script type="text/javascript" src="constants.js"></script>
+  <script type="text/javascript" src="treeui.js"></script>
   <script type="text/javascript" src="tree.js"></script>
 </head>
 
 <body>
   <div id="container" ontouchmove="BlockMove(event);">
-    <canvas id="tree_viz" class="full" width="640" height="480">
+    <canvas id="tree_viz" width="640" height="480">
       <p>Your browser doesn't support canvas.</p>
     </canvas>
   </div>
-
 </body>
 
 </html>

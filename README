@@ -16,7 +16,6 @@ General
     Add resize to container for both tree and game in index.html
 
 Tree
-    nodes as circles
     show sequence on click/touch node
     test on mobile devices
 

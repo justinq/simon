@@ -1,6 +1,7 @@
 body {
     margin: 0px;
     padding: 0px;
+    background-color: #000;
     color: #212121;
     font-family: Helvetica;
     font-size: 14px;
@@ -31,4 +32,3 @@ body {
 #tree_viz {
     /* position: absolute; */
 }
-

@@ -112,15 +112,7 @@ jQuery.fn.springy = function(params) {
 		// and then restore it here.
 		dragged = null;
 	});
-/*
-	Node.prototype.getWidth = function() {
-		return 20; // Magic number with no explanation.
-	};
 
-	Node.prototype.getHeight = function() {
-		return 20; // Magic number with no explanation.
-	};
-*/
 	var renderer = new Renderer(1, layout,
 		function clear() {
 			ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -190,7 +182,6 @@ jQuery.fn.springy = function(params) {
 			ctx.stroke();
 
 			// arrow
-
 			if (directional) {
 				ctx.save();
 				ctx.fillStyle = stroke;
@@ -206,6 +197,7 @@ jQuery.fn.springy = function(params) {
 				ctx.restore();
 			}
 		},
+
 		function drawNode(node, p) {
 			var s = toScreen(p);
 
