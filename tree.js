@@ -10,7 +10,8 @@ var server   = "/cgi-bin/server.py?"
 
 var addNode = function(n) {
     // the colour index for the palette
-    var c_idx = Math.floor(n.error*(NUM_COLOURS-1));
+    var c_idx = Math.floor((1.0-n.error)*(NUM_COLOURS-1));
+    //console.log(n.error);
     nodes[n.id] = graph.newNode({ label:     n.id
                                 , parent:    n.parent
                                 , sequence:  n.sequence
