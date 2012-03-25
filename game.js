@@ -208,7 +208,6 @@ d3.xml("images/game.svg", "image/svg+xml", function(xml) {
 
     // set to ready state
     setState(State.ready);
-
 });
 
 /*

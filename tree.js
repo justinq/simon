@@ -22,6 +22,7 @@ var addNode = function(n) {
                                 , stroke:    edge_colour
                                 , fill:      n.id==0 ?
                                      'black' : palettehex[c_idx]
+                                , isnew:     true
                                 });
     // Add the edge from the parent node
     if (n.parent != "null") {
@@ -46,11 +47,18 @@ var refreshTree = function() {
             if (!nodes[n.id]) {
                 addNode(n);
             }
+            else {
+                nodes[n.id].data.isnew    = false;
+            }
         });
+        //graph.renderer.start();
     });
 };
 
 jQuery(function(){
+    var ctx = document.getElementById('tree_viz').getContext('2d');
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
     var springy = jQuery('#tree_viz').springy({
         graph: graph
     });
@@ -58,4 +66,4 @@ jQuery(function(){
 // start refreshing the tree
 refreshTree();
 // TODO: put this back to refresh the tree
-//refreshInterval = setInterval("refreshTree()", 5000);
+refreshInterval = setInterval("refreshTree()", 5000);

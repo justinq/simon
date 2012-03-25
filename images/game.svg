@@ -30,12 +30,22 @@
        transform="matrix(1.6695652,0,0,1.4451612,-372.07454,66.349278)"
        />
     <path
-       style="fill:#000000;fill-opacity:0.50196078;stroke:none"
+       style="fill:#000000;fill-opacity:0.0;stroke:none"
        id="btn_centre"
        class="btn"
        d="M 102,65 C 102,88.748244 86.329966,108 67,108 47.670034,108 32,88.748244 32,65 32,41.251756 47.670034,22 67,22 c 19.329966,0 35,19.251756 35,43 z"
        transform="matrix(2.2571429,0,0,1.8372093,231.77143,549.94358)"
        />
+    <foreignObject id="btn_centre_label" x="310" y="605" width="145" height="145" style="fill-opacity:0.0">
+      <body xmlns="http://www.w3.org/1999/xhtml">
+        <div id="btn_centre_text" 
+        style="font-size:20px; color:white; text-align:center;" >
+          <p>.</p>
+          <p>Simon</p>
+          <p>.</p>
+        </div>
+      </body>
+    </foreignObject>
     <path
        style="fill:#00ffff;fill-opacity:1;stroke:none"
        d="m 759.96875,672.36218 -290.03125,0 C 468.41219,717.35366 432.72733,753.66687 388,756.20593 l 0,288.12497 c 204.4939,-2.1253 369.84342,-167.47483 371.96875,-371.96872 z"
@@ -61,14 +71,4 @@
        class="btn"
        />
   </g>
-  <foreignObject id="btn_centre_label" x="310" y="322" width="145" height="145">
-    <body xmlns="http://www.w3.org/1999/xhtml">
-      <div id="btn_centre_text" class="btn"
-        style="font-size:20px; color:white; text-align:center" >
-          <p>.</p>
-          <p>Simon</p>
-          <p>.</p>
-      </div>
-    </body>
-  </foreignObject>
 </svg>

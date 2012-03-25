@@ -110,6 +110,9 @@ jQuery.fn.springy = function(params) {
 	var nearest = null;
 	var dragged = null;
 
+    // keep track of the last added node
+    var latest = null;
+
 	jQuery(canvas).mousedown(function(e) {
 		jQuery('.actions').hide();
 
@@ -244,14 +247,25 @@ jQuery.fn.springy = function(params) {
 			// fill background based on nearest/selected node
             ctx.fillStyle = node.data.fill;
 			if (selected !== null && nearest.node !== null && selected.node.id === node.id) {
-                // embiggen the selected node
-                r *= 2;
+                r *= 2; // embiggen the selected node
 			} else if (nearest !== null && nearest.node !== null && nearest.node.id === node.id) {
                 //ctx.fillStyle = "#FFFF00";
 			} else {
                 // node fill colour
                 //ctx.fillStyle = node.data.fill;
 			}
+
+            if (node.data.islatest) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, r*1.2, 0, PIx2, false);
+                ctx.fillStyle = bg_colour;
+                ctx.fill();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = edge_colour;
+                ctx.stroke();
+			    ctx.restore();
+            }
 
             ctx.beginPath();
             ctx.arc(s.x, s.y, r, 0, PIx2, false);

@@ -1,4 +1,5 @@
-var edge_colour = "#ffffff",
+var bg_colour   = "#000000",
+    edge_colour = "#ffffff",
     NUM_COLOURS = 12,
     palette =       [ [41,    10,  216,  255]
                     , [38,    77,  255,  255]
@@ -36,8 +37,7 @@ var edge_colour = "#ffffff",
                      , [0.0, 1.0, 0.0, 1.0]
                      , [1.0, 0.0, 0.0, 1.0]
                      ],
-
-    buttons = ["centre", "blue", "yellow" , "green" , "red"];
+    buttons = ["centre", "blue", "yellow" , "green" , "red"],
     btn_colours = ["#000000", "#00ffff", "#ffff00", "#00ff00", "#ff0000"];
 
 var rgb2hex = function(r, g, b) {
