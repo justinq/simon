@@ -15,9 +15,5 @@ http://localhost:8000
 General
     Add resize to container for both tree and game in index.html
 
-Tree
-    show sequence on click/touch node
-    test on mobile devices
-
 Game
     reset when there hasn't been input for a while
