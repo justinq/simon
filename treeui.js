@@ -135,8 +135,10 @@ jQuery.fn.springy = function(params) {
 		nearest = layout.nearest(p);
 
 		if (dragged !== null && dragged.node !== null) {
-			dragged.point.p.x = p.x;
-			dragged.point.p.y = p.y;
+		    selected = nearest = dragged = layout.nearest(p);
+            //don't move the node
+			//dragged.point.p.x = p.x;
+			//dragged.point.p.y = p.y;
 		}
 
 		renderer.start();
