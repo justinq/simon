@@ -5,10 +5,13 @@ var server   = "/cgi-bin/server.py?"
   , treename = ''
   , graph    = new Graph()
   , nodes    = {}
+  , latestId = -1
   , refreshInterval
   ;
 
 var addNode = function(n) {
+    // this must be the latest node
+    latestId = n.id;
     // the colour index for the palette
     var c_idx = Math.floor((1.0-n.error)*(NUM_COLOURS-1));
     //console.log(n.error);
@@ -23,6 +26,7 @@ var addNode = function(n) {
                                 , fill:      n.id==0 ?
                                      'black' : palettehex[c_idx]
                                 , isnew:     true
+                                , islatest:  false
                                 });
     // Add the edge from the parent node
     if (n.parent != "null") {
@@ -44,14 +48,17 @@ var refreshTree = function() {
         var treeInfo = d3.csv.parse(datasetText);
         // Add the nodes if the don't exist already
         treeInfo.forEach( function(n) {
-            if (!nodes[n.id]) {
-                addNode(n);
+            if (nodes[n.id]) {
+                nodes[n.id].data.isnew    = false;
+                nodes[n.id].data.islatest = false;
             }
             else {
-                nodes[n.id].data.isnew    = false;
+                addNode(n);
             }
         });
-        //graph.renderer.start();
+        if (latestId > 0) {
+            nodes[latestId].data.islatest = true;
+        }
     });
 };
 
@@ -63,6 +70,7 @@ jQuery(function(){
         graph: graph
     });
 });
+
 // start refreshing the tree
 refreshTree();
 // TODO: put this back to refresh the tree
