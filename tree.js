@@ -20,8 +20,8 @@ var addNode = function(n) {
                                 , sequence:  n.sequence
                                 , error:     n.error
                                 , ip:        n.ip
-                                , radius:    n.id==0 ? 25 : 30
-                                , lineWidth: n.id==0 ? 15 : 0.1
+                                , radius:    n.id==0 ? 15 : 20
+                                , lineWidth: n.id==0 ? 10 : 0.1
                                 , stroke:    edge_colour
                                 , fill:      n.id==0 ?
                                      'black' : palettehex[c_idx]
@@ -33,7 +33,7 @@ var addNode = function(n) {
         graph.newEdge(nodes[n.parent], nodes[n.id],
                 { colour:       edge_colour
                 , directional:  false
-                , weight:       2.0
+                , weight:       1.0
                 });
     }
 }

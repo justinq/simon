@@ -260,7 +260,7 @@ jQuery.fn.springy = function(params) {
             if (node.data.islatest) {
                 ctx.save();
                 ctx.beginPath();
-                ctx.arc(s.x, s.y, r*1.2, 0, PIx2, false);
+                ctx.arc(s.x, s.y, r*1.5, 0, PIx2, false);
                 ctx.fillStyle = bg_colour;
                 ctx.fill();
                 ctx.lineWidth = 5;
