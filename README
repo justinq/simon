@@ -17,3 +17,6 @@ General
 
 Game
     reset when there hasn't been input for a while
+
+Tree
+    Pause animation on input

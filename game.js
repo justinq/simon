@@ -2,29 +2,30 @@
  * The Simon Game
  */
 
-var opacityOff = 0.5
-  , opacityOn  = 1.0
+var idleTime    = 60000
+  , idleTimeout = null
+  , opacityOff  = 0.5
+  , opacityOn   = 1.0
+  , server      = "/cgi-bin/server.py?"
+  , State       = { "ready" : 0
+                  , "get"   : 1
+                  , "play"  : 2
+                  , "input" : 3
+                  , "put"   : 4
+                  , "score" : 5
+                  }
+  , StateText   = [ "<p><span style='font-size:x-large'>Ready?</span></p><p>Click to begin</p>"
+                  , "<p>Picking<br/>from tree...</p>"
+                  , "<p>Watch<br/>&<br/>Listen</p>"
+                  , "<p>Play back<br/>then click<br/>here</p>"
+                  , "<p>Adding<br/>to tree...</p>"
+                  , "<p><span style='font-size:xx-large'>SCORE</span><br/>Click for next</p>"
+                  ]
+  , currentState = State.ready
+  , currentSequence
+  , progressArc, progressBar
+  , loaded = true
   ;
-
-var server = "/cgi-bin/server.py?"
-var State = { "ready" : 0
-            , "get"   : 1
-            , "play"  : 2
-            , "input" : 3
-            , "put"   : 4
-            , "score" : 5
-            };
-var StateText = [ "<p><span style='font-size:x-large'>Ready?</span></p><p>Click to begin</p>"
-                , "<p>Picking<br/>from tree...</p>"
-                , "<p>Watch<br/>&<br/>Listen</p>"
-                , "<p>Play back<br/>then click<br/>here</p>"
-                , "<p>Adding<br/>to tree...</p>"
-                , "<p><span style='font-size:xx-large'>SCORE</span><br/>Click for next</p>"
-                ];
-var currentState = State.ready;
-var currentSequence;
-var progressArc, progressBar;
-var loaded = true;
 
 /*
  * Set the current State
@@ -36,8 +37,13 @@ var setState = function(state) {
     if (state == State.score) {
         msg = msg.replace("SCORE", currentSequence.score==100 ? "Perfect!" : currentSequence.score+"%");
     }
+    // start the idle timeout for input or score phase
+    if (state == State.input || state == State.score) startIdleTimeout();
+    else clearIdleTimeout();
+
     d3.select("#btn_centre_text").html( msg );
 }
+
 var resetState = function() {
     setState(State.ready);
 }
@@ -129,6 +135,7 @@ var putSequence = function(s) {
 }
 
 var mainBtnDown = function(element) {
+    clearIdleTimeout();
 }
 
 var mainBtnUp = function(element) {
@@ -158,11 +165,15 @@ var btnDown = function(element, d, i) {
         highlightButton(i, true);
         currentSequence.input += i;
         playNote(i);
+        clearIdleTimeout();
     }
 };
 
 var btnUp = function(element, d, i) {
-    highlightButton(i, false);
+    if (currentState == State.input) {
+        highlightButton(i, false);
+        startIdleTimeout();
+    }
 };
 
 d3.xml("images/game.svg", "image/svg+xml", function(xml) {
@@ -224,3 +235,17 @@ var progressTimer = function(stopFunction, params) {
         }
     });
 }
+
+// reset the game after a timeout
+var clearIdleTimeout = function() {
+    if (idleTimeout) {
+        clearTimeout(idleTimeout);
+    }
+    idleTimeout = null;
+}
+
+var startIdleTimeout = function() {
+    clearIdleTimeout();
+    idleTimeout = setTimeout(resetState, idleTime);
+}
+
