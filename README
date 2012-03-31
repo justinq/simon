@@ -18,9 +18,6 @@ General
 Game
 
 Tree
-    Pause animation on input
-    Background colour on desktop.
-    Incrementally add nodes
     Add node near parent
     Resize node, edge based on number of nodes and screen dimensions
     Zoom, drag - hammer.js?

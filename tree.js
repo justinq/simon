@@ -5,24 +5,17 @@ var server   = "/cgi-bin/server.py?"
   , treename = ''
   , graph    = new Graph()
   , nodes    = {}
-  , latestId = -1
   , refreshInterval
   , numColours  = 11
   , colourScale = d3.scale.ordinal()
                     .domain(d3.range(0, numColours))
                     .range(colorbrewer.RdYlBu[numColours])
+  , nodeQueue = new Array()
   ;
 
 var addNode = function(n) {
-    // this must be the latest node
-    latestId = n.id;
     // the colour index for the palette
     var c_idx = Math.floor((1.0-n.error)*(numColours-1));
-    //console.log(colourScale(c_idx).toString());
-
-    console.log(c_idx);
-
-    //console.log(colourScale(2));
     nodes[n.id] = graph.newNode({ label:     n.id
                                 , parent:    n.parent
                                 , sequence:  n.sequence
@@ -34,7 +27,7 @@ var addNode = function(n) {
                                 , fill:      n.id==0 ?
                                    'black' : colourScale(c_idx).toString()
                                 , isnew:     true
-                                , islatest:  false
+                                , islatest:  true
                                 });
     // Add the edge from the parent node
     if (n.parent != "null") {
@@ -44,9 +37,22 @@ var addNode = function(n) {
                 , weight:       1.0
                 });
     }
+
+    return nodes[n.id];
+}
+
+var addNodeFromQueue = function() {
+    // remove the latest flag from all the old nodes
+    for (var n in nodes) { nodes[n].data.islatest = false; }
+    // add the first node in queue, set timeout to add the next
+    addNode( nodeQueue.shift() );
+    if( nodeQueue.length > 0) { setTimeout(addNodeFromQueue, 500); }
 }
 
 var refreshTree = function() {
+    // only update if there are no nodes in the queue
+    if( nodeQueue.length > 1) { return; }
+
     d3.text(server+"tree", function (datasetText) {
         // the first line is the tree name
         var datasetText = datasetText.replace(/(.*)\n/, function(a) {
@@ -54,19 +60,17 @@ var refreshTree = function() {
             return "";
         });
         var treeInfo = d3.csv.parse(datasetText);
-        // Add the nodes if the don't exist already
+        // Add the nodes if it doesn't exist already
         treeInfo.forEach( function(n) {
             if (nodes[n.id]) {
                 nodes[n.id].data.isnew    = false;
-                nodes[n.id].data.islatest = false;
             }
             else {
-                addNode(n);
+                nodeQueue.push(n);
             }
         });
-        if (latestId > 0) {
-            nodes[latestId].data.islatest = true;
-        }
+        // start adding the nodes from the queue
+        if (nodeQueue.length > 0) { addNodeFromQueue(); }
     });
 };
 
