@@ -2,7 +2,7 @@
  * Load the tree data from the server
  */
 var server   = "/cgi-bin/server.py?"
-  , treename = ''
+  , treename = null
   , graph    = new Graph()
   , nodes    = {}
   , refreshInterval
@@ -37,7 +37,6 @@ var addNode = function(n) {
                 , weight:       1.0
                 });
     }
-
     return nodes[n.id];
 }
 
@@ -49,6 +48,11 @@ var addNodeFromQueue = function() {
     if( nodeQueue.length > 0) { setTimeout(addNodeFromQueue, 500); }
 }
 
+var clearTree = function() {
+    for (var n in nodes) { graph.removeNode(nodes[n]); }
+    nodes = {};
+}
+
 var refreshTree = function() {
     // only update if there are no nodes in the queue
     if( nodeQueue.length > 1) { return; }
@@ -56,18 +60,18 @@ var refreshTree = function() {
     d3.text(server+"tree", function (datasetText) {
         // the first line is the tree name
         var datasetText = datasetText.replace(/(.*)\n/, function(a) {
-            treename = a;
+            if (treename != a) {
+                treename = a;
+                console.log("Starting new tree " + treename);
+                clearTree();
+            }
             return "";
         });
         var treeInfo = d3.csv.parse(datasetText);
         // Add the nodes if it doesn't exist already
         treeInfo.forEach( function(n) {
-            if (nodes[n.id]) {
-                nodes[n.id].data.isnew    = false;
-            }
-            else {
-                nodeQueue.push(n);
-            }
+            if (nodes[n.id]) { nodes[n.id].data.isnew = false; }
+            else { nodeQueue.push(n); }
         });
         // start adding the nodes from the queue
         if (nodeQueue.length > 0) { addNodeFromQueue(); }

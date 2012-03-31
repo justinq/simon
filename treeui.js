@@ -105,7 +105,7 @@ jQuery.fn.springy = function(params) {
 		return new Vector(px, py);
 	};
 
-	// half-assed drag and drop
+	// half-arsed drag and drop
 	var selected = null;
 	var nearest = null;
 	var dragged = null;
