@@ -7,14 +7,22 @@ var server   = "/cgi-bin/server.py?"
   , nodes    = {}
   , latestId = -1
   , refreshInterval
+  , numColours  = 11
+  , colourScale = d3.scale.ordinal()
+                    .domain(d3.range(0, numColours))
+                    .range(colorbrewer.RdYlBu[numColours])
   ;
 
 var addNode = function(n) {
     // this must be the latest node
     latestId = n.id;
     // the colour index for the palette
-    var c_idx = Math.floor((1.0-n.error)*(NUM_COLOURS-1));
-    //console.log(n.error);
+    var c_idx = Math.floor((1.0-n.error)*(numColours-1));
+    //console.log(colourScale(c_idx).toString());
+
+    console.log(c_idx);
+
+    //console.log(colourScale(2));
     nodes[n.id] = graph.newNode({ label:     n.id
                                 , parent:    n.parent
                                 , sequence:  n.sequence
@@ -24,7 +32,7 @@ var addNode = function(n) {
                                 , lineWidth: n.id==0 ? 10 : 0.1
                                 , stroke:    edge_colour
                                 , fill:      n.id==0 ?
-                                     'black' : palettehex[c_idx]
+                                   'black' : colourScale(c_idx).toString()
                                 , isnew:     true
                                 , islatest:  false
                                 });
