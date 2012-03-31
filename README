@@ -16,6 +16,7 @@ General
     Add resize to container for both tree and game in index.html
 
 Game
+    fix vertical positioning
 
 Tree
     Add node near parent
