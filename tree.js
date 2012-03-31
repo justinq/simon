@@ -21,8 +21,8 @@ var addNode = function(n) {
                                 , sequence:  n.sequence
                                 , error:     n.error
                                 , ip:        n.ip
-                                , radius:    n.id==0 ? 15 : 20
-                                , lineWidth: n.id==0 ? 10 : 0.1
+                                , radius:    n.id==0 ? 12 : 15
+                                , lineWidth: n.id==0 ?  8 : 0.1
                                 , stroke:    edge_colour
                                 , fill:      n.id==0 ?
                                    'black' : colourScale(c_idx).toString()
