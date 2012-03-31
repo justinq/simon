@@ -135,13 +135,13 @@ jQuery.fn.springy = function(params) {
 		nearest = layout.nearest(p);
 
 		if (dragged !== null && dragged.node !== null) {
-		    selected = nearest = dragged = layout.nearest(p);
+		    selected = dragged = nearest;
             //don't move the node
 			//dragged.point.p.x = p.x;
 			//dragged.point.p.y = p.y;
+		    renderer.start();
 		}
 
-		renderer.start();
 	});
 
 	jQuery(window).bind('mouseup',function(e) {
