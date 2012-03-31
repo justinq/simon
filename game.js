@@ -85,7 +85,9 @@ var highlightButton = function(i, on) {
 }
 
 var playNote = function(i) {
-    document.getElementById(buttons[i]+"-tone").play();
+    var snd = new Audio("audio/" + buttons[i] + ".oga");
+    snd.play();
+    //document.getElementById(buttons[i]+"-tone").play();
 }
 
 var playSequence = function(s) {
@@ -164,7 +166,7 @@ var btnDown = function(element, d, i) {
     if (currentState == State.input) {
         highlightButton(i, true);
         currentSequence.input += i;
-        playNote(i);
+        setTimeout('playNote('+i+')',0);
         clearIdleTimeout();
     }
 };
