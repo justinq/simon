@@ -16,7 +16,11 @@ General
     Add resize to container for both tree and game in index.html
 
 Game
-    reset when there hasn't been input for a while
 
 Tree
     Pause animation on input
+    Background colour on desktop.
+    Incrementally add nodes
+    Add node near parent
+    Resize node, edge based on number of nodes and screen dimensions
+    Zoom, drag - hammer.js?
