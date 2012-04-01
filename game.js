@@ -87,7 +87,7 @@ var highlightButton = function(i, on) {
 var playNote = function(i) {
     //var snd = new Audio("audio/" + buttons[i] + ".oga");
     //snd.play();
-    //document.getElementById(buttons[i]+"-tone").play();
+    document.getElementById(buttons[i]+"-tone").play();
 }
 
 var playSequence = function(s) {
