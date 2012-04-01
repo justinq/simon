@@ -113,11 +113,8 @@ jQuery.fn.springy = function(params) {
     // keep track of the last added node
     var latest = null;
 
-	jQuery(canvas).mousedown(function(e) {
+	var mousedown = function(p) {
 		jQuery('.actions').hide();
-
-		var pos = jQuery(this).offset();
-		var p = fromScreen({x: e.pageX - pos.left, y: e.pageY - pos.top});
 		selected = nearest = dragged = layout.nearest(p);
 
 		if (selected.node !== null) {
@@ -127,14 +124,12 @@ jQuery.fn.springy = function(params) {
 		}
 
 		renderer.start();
-	});
+	};
 
-	jQuery(canvas).mousemove(function(e) {
-		var pos = jQuery(this).offset();
-		var p = fromScreen({x: e.pageX - pos.left, y: e.pageY - pos.top});
-		nearest = layout.nearest(p);
-
+	var mousemove = function(p) {
 		if (dragged !== null && dragged.node !== null) {
+		    nearest = layout.nearest(p);
+
             // change the selected to nearest and redraw if necessary
             if (selected.node.id != nearest.node.id) { renderer.start(); }
 		    selected = dragged = nearest;
@@ -142,10 +137,9 @@ jQuery.fn.springy = function(params) {
 			//dragged.point.p.x = p.x;
 			//dragged.point.p.y = p.y;
 		}
+	}
 
-	});
-
-	jQuery(window).bind('mouseup',function(e) {
+	var mouseup = function() {
 		// Bug! Node's mass isn't reset on mouseup. Nodes which have been
 		// dragged don't repulse very well. Store the initial mass in mousedown
 		// and then restore it here.
@@ -153,7 +147,38 @@ jQuery.fn.springy = function(params) {
         selected = null; // remove this to keep selected
 
 		renderer.start();
-	});
+	}
+
+    if (is_touch_device) {
+	    jQuery(canvas).bind('touchdown',function(e) {
+		    var pos = jQuery(this).offset();
+		    var p = fromScreen({x: e.pageX - pos.left, y: e.pageY - pos.top});
+            mousedown(p)
+        });
+	    jQuery(canvas).bind('touchmove',function(e) {
+		    var pos = jQuery(this).offset();
+		    var p = fromScreen({x: e.touches[0].pageX - pos.left, y: e.touches[0].pageY - pos.top});
+            mousemove(p)
+        });
+	    jQuery(window).bind('touchup',function(e) {
+            mouseup();
+        });
+    }
+    else {
+	    jQuery(canvas).mousedown(function(e) {
+		    var pos = jQuery(this).offset();
+		    var p = fromScreen({x: e.pageX - pos.left, y: e.pageY - pos.top});
+            mousedown(p)
+        });
+	    jQuery(canvas).mousemove(function(e) {
+		    var pos = jQuery(this).offset();
+		    var p = fromScreen({x: e.pageX - pos.left, y: e.pageY - pos.top});
+            mousemove(p)
+        });
+	    jQuery(window).bind('mouseup',function(e) {
+            mouseup();
+        });
+    }
 
 	var renderer = new Renderer(1, layout,
 		function clear() {
