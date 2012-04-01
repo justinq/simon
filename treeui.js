@@ -152,12 +152,12 @@ jQuery.fn.springy = function(params) {
     if (is_touch_device) {
 	    document.addEventListener('touchstart',function(e) {
 		    var pos = jQuery(this).offset();
-		    var p = fromScreen({x: e.touches[0].pageX - pos.left, y: e.touches[0].pageY - pos.top});
+		    var p = fromScreen({x: e.touches[0].pageX, y: e.touches[0].pageY});
             mousedown(p)
         });
 	    document.addEventListener('touchmove',function(e) {
 		    var pos = jQuery(this).offset();
-		    var p = fromScreen({x: e.touches[0].pageX - pos.left, y: e.touches[0].pageY - pos.top});
+		    var p = fromScreen({x: e.touches[0].pageX, y: e.touches[0].pageY});
             mousemove(p)
         });
 	    document.addEventListener('touchend',function(e) {
