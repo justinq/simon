@@ -36,7 +36,7 @@
        d="M 102,65 C 102,88.748244 86.329966,108 67,108 47.670034,108 32,88.748244 32,65 32,41.251756 47.670034,22 67,22 c 19.329966,0 35,19.251756 35,43 z"
        transform="matrix(2.2571429,0,0,1.8372093,231.77143,549.94358)"
        />
-    <foreignObject id="btn_centre_label" x="310" y="620" width="145" height="145" style="fill-opacity:0.0">
+    <foreignObject id="btn_centre_label" x="310" y="625" width="145" height="145" style="fill-opacity:0.0">
       <body xmlns="http://www.w3.org/1999/xhtml">
         <div id="btn_centre_text" 
         style="font-size:20px; color:white; text-align:center;" >

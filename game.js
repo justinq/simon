@@ -16,7 +16,7 @@ var idleTime    = 60000
                   }
   , StateText   = [ "<p><span style='font-size:x-large'>Ready?</span></p><p>Click to begin</p>"
                   , "<p>Picking<br/>from tree...</p>"
-                  , "<p>Watch<br/>&<br/>Listen</p>"
+                  , "<p>Watch<br/>Carefully</p>"
                   , "<p>Play back<br/>then click<br/>here</p>"
                   , "<p>Adding<br/>to tree...</p>"
                   , "<p><span style='font-size:xx-large'>SCORE</span><br/>Click for next</p>"
@@ -85,8 +85,8 @@ var highlightButton = function(i, on) {
 }
 
 var playNote = function(i) {
-    var snd = new Audio("audio/" + buttons[i] + ".oga");
-    snd.play();
+    //var snd = new Audio("audio/" + buttons[i] + ".oga");
+    //snd.play();
     //document.getElementById(buttons[i]+"-tone").play();
 }
 
