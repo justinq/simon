@@ -150,7 +150,7 @@ jQuery.fn.springy = function(params) {
 	}
 
     if (is_touch_device) {
-	    document.addEventListener('touchdown',function(e) {
+	    document.addEventListener('touchstart',function(e) {
 		    var pos = jQuery(this).offset();
 		    var p = fromScreen({x: e.touches[0].pageX - pos.left, y: e.touches[0].pageY - pos.top});
             mousedown(p)
@@ -160,7 +160,7 @@ jQuery.fn.springy = function(params) {
 		    var p = fromScreen({x: e.touches[0].pageX - pos.left, y: e.touches[0].pageY - pos.top});
             mousemove(p)
         });
-	    document.addEventListener('touchup',function(e) {
+	    document.addEventListener('touchend',function(e) {
             mouseup();
         });
     }
