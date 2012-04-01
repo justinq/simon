@@ -150,17 +150,17 @@ jQuery.fn.springy = function(params) {
 	}
 
     if (is_touch_device) {
-	    jQuery(canvas).bind('touchdown',function(e) {
+	    document.addEventListener('touchdown',function(e) {
 		    var pos = jQuery(this).offset();
-		    var p = fromScreen({x: e.pageX - pos.left, y: e.pageY - pos.top});
+		    var p = fromScreen({x: e.touches[0].pageX - pos.left, y: e.touches[0].pageY - pos.top});
             mousedown(p)
         });
-	    jQuery(canvas).bind('touchmove',function(e) {
+	    document.addEventListener('touchmove',function(e) {
 		    var pos = jQuery(this).offset();
 		    var p = fromScreen({x: e.touches[0].pageX - pos.left, y: e.touches[0].pageY - pos.top});
             mousemove(p)
         });
-	    jQuery(window).bind('touchup',function(e) {
+	    document.addEventListener('touchup',function(e) {
             mouseup();
         });
     }
