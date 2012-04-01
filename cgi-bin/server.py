@@ -5,7 +5,7 @@ import os
 import random
 import cgi
 
-MAXSIZE=250
+MAXSIZE=150
 DIRPREFIX="data/"
 DATADIR=DIRPREFIX+open(DIRPREFIX+"current_tree").readline().rstrip()
 
