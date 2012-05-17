@@ -2,7 +2,7 @@
 title: Simon
 date: 30 March, 2012
 description: A visualisation commissioned by the Edinburgh Festivals Innovation Lab and supported by the INTERREG IVB North-West Europe Programme.  It was designed by Stefanie Posavec and built using the new Summer Festivals Listings API.
-thumbnail: thumbnail.png
+thumbnail: images/game.png
 ---
 
 <!--
@@ -32,8 +32,7 @@ Tree
 <script src="lib/springy/springy.js" type="text/javascript"></script>
 <script src="treeui.js" type="text/javascript"></script>
 
-<script src="lib/d3/d3.js" type="text/javascript"></script>
-<script src="lib/d3/d3.csv.js" type="text/javascript"></script>
+<script src="lib/d3/d3.v2.js" type="text/javascript"></script>
 
 <script src="lib/touch/touch.js"></script>
 
