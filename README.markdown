@@ -1,7 +1,7 @@
 ---
 title: Simon
 date: 30 March, 2012
-description: A visualisation commissioned by the Edinburgh Festivals Innovation Lab and supported by the INTERREG IVB North-West Europe Programme.  It was designed by Stefanie Posavec and built using the new Summer Festivals Listings API.
+description: TODO
 thumbnail: images/game.png
 ---
 
